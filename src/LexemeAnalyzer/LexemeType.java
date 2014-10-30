@@ -1,4 +1,4 @@
-package LexicalParser;
+package LexemeAnalyzer;
 
 /**
  * Created by max on 30.10.14.
