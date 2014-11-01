@@ -1,11 +1,22 @@
 package LexemeAnalyzer;
 
+import java.io.*;
+
 /**
  * Created by max on 30.10.14.
  */
 public class Main {
     public static void main(String[] args) {
-        Lexer lexer = new Lexer("int main(int argc, char **argv) {\n");
-        lexer.analyzeSource();
+        try {
+            Reader reader = new InputStreamReader(new FileInputStream((new File("input.txt"))), "UTF-8");
+            Lexer lexer = new Lexer(reader);
+            lexer.analyzeSource();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

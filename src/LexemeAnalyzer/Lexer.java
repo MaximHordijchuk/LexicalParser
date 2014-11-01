@@ -52,9 +52,13 @@ public class Lexer {
     private LinkedList<LexemePosition> processString(int start, int end) {
         StringBuilder stringBuilder = new StringBuilder(source.substring(start, end));
         LinkedList<LexemePosition> lexemePositions = new LinkedList<LexemePosition>();
+        lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.COMMENT));
+        lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.PREPROCESSOR_DIRECTIVES));
+        lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.STRING_OR_CHARACTER));
         lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.RESERVED_WORD));
         lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.IDENTIFIER));
         lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.NUMBER));
+        lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.OPERATOR));
         lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.SEPARATOR));
         return lexemePositions;
     }
@@ -63,12 +67,14 @@ public class Lexer {
         Matcher matcher = lexemeType.getPattern().matcher(string.toString());
         LinkedList<LexemePosition> lexemePositions = new LinkedList<LexemePosition>();
         while (matcher.find()) {
-            lexemePositions.add(new LexemePosition(lexemeType, matcher.start(1), matcher.end(1)));
+            lexemePositions.add(new LexemePosition(lexemeType, matcher.start(), matcher.end()));
         }
         for (ListIterator<LexemePosition> position = lexemePositions.listIterator(lexemePositions.size());
              position.hasPrevious(); ) {
             LexemePosition currentPosition = position.previous();
-            string.delete(currentPosition.start, currentPosition.end);
+            for (int i = currentPosition.start; i < currentPosition.end; i++) {
+                string.setCharAt(i, ' ');
+            }
         }
         return lexemePositions;
     }

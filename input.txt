@@ -1,0 +1,7 @@
+#include <iostream>
+/*  this
+    is
+main function*/
+int main(int argc, char **argv) {
+    a>b=c;
+}
