@@ -1,7 +1,5 @@
 package LexemeAnalyzer;
 
-import java.io.*;
-
 /**
  * Created by max on 30.10.14.
  */
@@ -20,6 +18,6 @@ public class Main {
         }*/
         Lexer lexer = new Lexer();
         LexerGUI lexerGUI = new LexerGUI();
-        LexerController lexerController = new LexerController(lexerGUI, lexer);
+        new LexerController(lexerGUI, lexer);
     }
 }

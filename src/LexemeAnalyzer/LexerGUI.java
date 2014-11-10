@@ -6,6 +6,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
@@ -13,10 +15,12 @@ import java.util.List;
  */
 public class LexerGUI extends JFrame {
 
-    public static final Color DEFAULT_FOREGROUND_COLOR = Color.decode("#FFFFFE");
+    public static final Color DEFAULT_FOREGROUND_COLOR = Color.decode("#8B0000");
     public static final Color BACKGROUND_COLOR = Color.decode("#4F4F4F");
     private JPanel rootPanel;
     private JTextPane text;
+    private JScrollPane scrollPane;
+
 
     public LexerGUI() throws HeadlessException {
         super("Code analyzer");
@@ -24,9 +28,10 @@ public class LexerGUI extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        text.setBackground(BACKGROUND_COLOR);
+        JScrollBar jScrollBar = scrollPane.getVerticalScrollBar();
+        jScrollBar.setUnitIncrement(20);
 
-        //set foreground color
+        text.setBackground(BACKGROUND_COLOR);
         setDefaultForegroundColor();
 
         setVisible(true);
@@ -45,14 +50,13 @@ public class LexerGUI extends JFrame {
                     StyledDocument document = text.getStyledDocument();
                     SimpleAttributeSet attributeSet = new SimpleAttributeSet();
                     StyleConstants.setForeground(attributeSet, Color.decode(position.type.getColor()));
-                    document.setCharacterAttributes(position.start, position.end - position.start + 1,
+                    document.setCharacterAttributes(position.start, position.end - position.start,
                             attributeSet, true);
                     text.setDocument(document);
                 }
             });
             SwingUtilities.invokeLater(highlightThread);
         }
-        //TODO: обнулить все стили в начале
     }
 
     public void setDefaultForegroundColor() {
@@ -62,7 +66,7 @@ public class LexerGUI extends JFrame {
                 StyledDocument document = text.getStyledDocument();
                 SimpleAttributeSet attributeSet = new SimpleAttributeSet();
                 StyleConstants.setForeground(attributeSet, DEFAULT_FOREGROUND_COLOR);
-                document.setParagraphAttributes(0, document.getLength(), attributeSet, true);
+                document.setCharacterAttributes(0, document.getLength(), attributeSet, true);
                 text.setDocument(document);
             }
         });

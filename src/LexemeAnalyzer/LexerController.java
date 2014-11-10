@@ -33,7 +33,7 @@ public class LexerController {
 
         @Override
         public void removeUpdate(DocumentEvent e) {
-            lexer.removeString(e.getOffset(), e.getOffset());
+            lexer.removeString(e.getOffset(), e.getLength());
             lexerGUI.changeTextColor(lexer.analyzeSource());
         }
 
