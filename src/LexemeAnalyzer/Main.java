@@ -7,7 +7,7 @@ import java.io.*;
  */
 public class Main {
     public static void main(String[] args) {
-        try {
+        /*try {
             Reader reader = new InputStreamReader(new FileInputStream((new File("input.txt"))), "UTF-8");
             Lexer lexer = new Lexer(reader);
             lexer.analyzeSource();
@@ -17,6 +17,9 @@ public class Main {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+        Lexer lexer = new Lexer();
+        LexerGUI lexerGUI = new LexerGUI();
+        LexerController lexerController = new LexerController(lexerGUI, lexer);
     }
 }

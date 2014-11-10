@@ -37,20 +37,17 @@ public class Lexer {
         this.source.append(source);
     }
 
-    public void replaceSourceString(int from, int to, String str) {
-        source.replace(from, to, str);
+    public void insertString(int offset, String string) {
+        source.insert(offset, string);
+
+    }
+
+    public void removeString(int offset, int length) {
+        source.delete(offset, offset + length);
     }
 
     public LinkedList<LexemePosition> analyzeSource() {
-        return processString(0, source.length() - 1);
-    }
-
-    public LinkedList<LexemePosition> analyzeSource(int start, int end) {
-        return processString(start, end);
-    }
-
-    private LinkedList<LexemePosition> processString(int start, int end) {
-        StringBuilder stringBuilder = new StringBuilder(source.substring(start, end));
+        StringBuilder stringBuilder = new StringBuilder(source);
         LinkedList<LexemePosition> lexemePositions = new LinkedList<LexemePosition>();
         lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.COMMENT));
         lexemePositions.addAll(getLexemePosition(stringBuilder, LexemeType.PREPROCESSOR_DIRECTIVES));
