@@ -24,7 +24,9 @@
             <children>
               <component id="7ccd" class="javax.swing.JTextPane" binding="text">
                 <constraints border-constraint="Center"/>
-                <properties/>
+                <properties>
+                  <font size="14"/>
+                </properties>
               </component>
             </children>
           </grid>
